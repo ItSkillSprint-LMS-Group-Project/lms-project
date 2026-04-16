@@ -1,5 +1,6 @@
-package com.example.lmsproject.entity;
+package com.example.lmsproject.Assessment.entity;
 
+import com.example.lmsproject.course.entity.Course;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
@@ -13,8 +14,10 @@ public class Assessment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String title;
-    private Integer orderIndex;
+
+    @Column(nullable = false)
     private Integer timeLimitMinutes;
 
     @ManyToOne

@@ -1,4 +1,4 @@
-package com.example.lmsproject.entity;
+package com.example.lmsproject.Assessment.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +13,10 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String questionText;
+    @Column(nullable = false)
+    private String Text;
+
+    @Column(nullable = false)
     private Integer points;
 
     @ManyToOne

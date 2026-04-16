@@ -1,5 +1,6 @@
-package com.example.lmsproject.entity;
+package com.example.lmsproject.content.entity;
 
+import com.example.lmsproject.course.entity.Course;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,11 +12,15 @@ public class Content {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(nullable = false)
     private String title;
-    private String type;
-    private String textContent;
-    private Integer orderIndex;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private ContentType type;
+
+    @Column
+    private String text;
 
     @ManyToOne
     @JoinColumn(name = "course_id")

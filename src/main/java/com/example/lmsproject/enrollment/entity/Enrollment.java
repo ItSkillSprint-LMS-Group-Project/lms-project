@@ -1,7 +1,12 @@
-package com.example.lmsproject.entity;
+package com.example.lmsproject.enrollment.entity;
 
+import com.example.lmsproject.course.entity.Course;
+import com.example.lmsproject.user.entity.User;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,7 +18,11 @@ public class Enrollment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EnrollmentStatus status;
+
+    @CreationTimestamp
     private LocalDateTime enrolledAt;
 
     @ManyToOne

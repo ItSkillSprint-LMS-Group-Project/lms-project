@@ -1,7 +1,10 @@
-package com.example.lmsproject.entity;
+package com.example.lmsproject.Assessment.entity;
 
+import com.example.lmsproject.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,7 +17,10 @@ public class AssessmentSubmission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private Integer totalScore;
+
+    @CreationTimestamp
     private LocalDateTime submittedAt;
 
     @ManyToOne
