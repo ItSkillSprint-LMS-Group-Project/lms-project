@@ -1,12 +1,11 @@
 package com.example.lmsproject.course.entity;
-import com.example.lmsproject.Assessment.entity.Assessment;
-import com.example.lmsproject.Assignment.entity.Assignment;
+import com.example.lmsproject.assessment.entity.Assessment;
+import com.example.lmsproject.assignment.entity.Assignment;
 import com.example.lmsproject.content.entity.Content;
 import com.example.lmsproject.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;

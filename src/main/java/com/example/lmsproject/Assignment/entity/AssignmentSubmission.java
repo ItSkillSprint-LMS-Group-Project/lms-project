@@ -1,4 +1,4 @@
-package com.example.lmsproject.Assignment.entity;
+package com.example.lmsproject.assignment.entity;
 
 import com.example.lmsproject.user.entity.User;
 import jakarta.persistence.*;
