@@ -1,7 +1,8 @@
 package com.example.lmsproject.user.entity;
 
 import com.example.lmsproject.course.entity.Course;
-import com.example.lmsproject.entity.Enrollment;
+import com.example.lmsproject.enrollment.entity.Enrollment;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
@@ -30,6 +31,11 @@ public class User {
     @Column(unique = true,nullable = false,length = 100)
     @Email
     private String email;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(nullable = false)
+    private String password;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role;
