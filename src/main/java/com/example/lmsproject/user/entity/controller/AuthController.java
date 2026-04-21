@@ -1,8 +1,8 @@
 package com.example.lmsproject.user.entity.controller;
 
-import com.example.lmsproject.user.entity.dto.AuthResponse;
-import com.example.lmsproject.user.entity.dto.LoginRequest;
-import com.example.lmsproject.user.entity.dto.RegisterRequest;
+import com.example.lmsproject.user.entity.dto.response.AuthResponse;
+import com.example.lmsproject.user.entity.dto.request.LoginRequest;
+import com.example.lmsproject.user.entity.dto.request.RegisterRequest;
 import com.example.lmsproject.user.entity.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

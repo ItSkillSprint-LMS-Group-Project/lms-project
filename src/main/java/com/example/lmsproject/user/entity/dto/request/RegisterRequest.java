@@ -1,4 +1,4 @@
-package com.example.lmsproject.user.entity.dto;
+package com.example.lmsproject.user.entity.dto.request;
 
 import com.example.lmsproject.user.entity.UserRole;
 import jakarta.validation.constraints.Email;

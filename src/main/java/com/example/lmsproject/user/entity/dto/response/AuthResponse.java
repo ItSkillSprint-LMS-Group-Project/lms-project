@@ -1,4 +1,4 @@
-package com.example.lmsproject.user.entity.dto;
+package com.example.lmsproject.user.entity.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
