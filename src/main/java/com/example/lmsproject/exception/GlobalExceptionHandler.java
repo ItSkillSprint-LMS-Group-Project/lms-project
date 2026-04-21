@@ -13,11 +13,6 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> handleResourceNotFound(ResourceNotFoundException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
     @ExceptionHandler(AlreadyExistsException.class)
     public ResponseEntity<Map<String, Object>> handleAlreadyExists(AlreadyExistsException ex) {
         return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
@@ -32,7 +27,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleForbidden(ForbiddenOperationException ex) {
         return buildResponse(HttpStatus.FORBIDDEN, ex.getMessage());
     }
-
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
