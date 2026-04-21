@@ -29,7 +29,7 @@ public class EnrollmentController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(enrollmentService.enrollByCourseCode(request, user.getId()));
     }
-    @PostMapping("/{courseId}/email")
+    @PostMapping("/courses/{courseId}/email")
     @PreAuthorize("@courseService.isOwner(#courseId,authentication.principal.id)")
     public ResponseEntity<EnrollmentResponse>  enrollByEmail(@PathVariable Long courseId,@RequestBody EnrollByEmailRequest request){
         return ResponseEntity.status(HttpStatus.CREATED).body(enrollmentService.enrollByEmail(courseId,request));

@@ -3,6 +3,7 @@ package com.example.lmsproject.user.service;
 import com.example.lmsproject.exception.AlreadyExistsException;
 import com.example.lmsproject.exception.BadRequestException;
 import com.example.lmsproject.exception.ForbiddenOperationException;
+import com.example.lmsproject.security.service.JwtService;
 import com.example.lmsproject.user.entity.User;
 import com.example.lmsproject.user.entity.UserRole;
 import com.example.lmsproject.user.dto.response.AuthResponse;
