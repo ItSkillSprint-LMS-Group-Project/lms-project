@@ -46,6 +46,7 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getAllCourses());
     }
 
+
     @PatchMapping("/{id}")
     @PreAuthorize("@courseService.isOwner(#id, authentication.principal.id) or hasRole('ADMIN')")
     public ResponseEntity<CourseResponse> updateCourse(
