@@ -1,6 +1,11 @@
-package com.example.lmsproject.entity;
+package com.example.lmsproject.course.entity;
+import com.example.lmsproject.assessment.entity.Assessment;
+import com.example.lmsproject.assignment.entity.Assignment;
+import com.example.lmsproject.content.entity.Content;
+import com.example.lmsproject.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,10 +19,17 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String title;
+
+    @Column
     private String description;
-    private boolean isPublished;
+
+    @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @Column(unique = true,nullable = false)
+    private String courseCode;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")

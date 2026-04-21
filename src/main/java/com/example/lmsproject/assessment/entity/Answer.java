@@ -1,4 +1,4 @@
-package com.example.lmsproject.entity;
+package com.example.lmsproject.assessment.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

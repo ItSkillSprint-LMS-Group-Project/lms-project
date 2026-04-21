@@ -1,4 +1,4 @@
-package com.example.lmsproject.entity;
+package com.example.lmsproject.assessment.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,7 +12,9 @@ public class Option {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String text;
+    @Column
     private boolean isCorrect;
 
     @ManyToOne
