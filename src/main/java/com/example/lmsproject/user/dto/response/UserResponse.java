@@ -1,4 +1,4 @@
-package com.example.lmsproject.user.entity.dto.response;
+package com.example.lmsproject.user.dto.response;
 
 import com.example.lmsproject.user.entity.UserRole;
 import lombok.AllArgsConstructor;

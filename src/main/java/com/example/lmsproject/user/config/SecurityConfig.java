@@ -1,4 +1,4 @@
-package com.example.lmsproject.user.entity.config;
+package com.example.lmsproject.user.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

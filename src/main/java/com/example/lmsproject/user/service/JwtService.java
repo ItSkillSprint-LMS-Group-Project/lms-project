@@ -1,4 +1,4 @@
-package com.example.lmsproject.user.entity.service;
+package com.example.lmsproject.user.service;
 
 import com.example.lmsproject.user.entity.User;
 import io.jsonwebtoken.Claims;

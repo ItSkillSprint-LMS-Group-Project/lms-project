@@ -1,7 +1,6 @@
 package com.example.lmsproject.course.repository;
 
 import com.example.lmsproject.course.entity.Course;
-import com.example.lmsproject.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,14 +1,11 @@
 package com.example.lmsproject.enrollment.mapper;
 
 import com.example.lmsproject.course.entity.Course;
-import com.example.lmsproject.enrollment.dto.EnrollByCodeRequest;
 import com.example.lmsproject.enrollment.dto.EnrollmentResponse;
 import com.example.lmsproject.enrollment.entity.Enrollment;
 import com.example.lmsproject.enrollment.entity.EnrollmentStatus;
 import com.example.lmsproject.user.entity.User;
-import com.example.lmsproject.user.repository.UserRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class EnrollmentMapper {

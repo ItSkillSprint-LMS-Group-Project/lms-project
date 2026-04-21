@@ -1,9 +1,9 @@
-package com.example.lmsproject.user.entity.controller;
+package com.example.lmsproject.user.controller;
 
-import com.example.lmsproject.user.entity.dto.response.AuthResponse;
-import com.example.lmsproject.user.entity.dto.request.LoginRequest;
-import com.example.lmsproject.user.entity.dto.request.RegisterRequest;
-import com.example.lmsproject.user.entity.service.AuthService;
+import com.example.lmsproject.user.dto.response.AuthResponse;
+import com.example.lmsproject.user.dto.request.LoginRequest;
+import com.example.lmsproject.user.dto.request.RegisterRequest;
+import com.example.lmsproject.user.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

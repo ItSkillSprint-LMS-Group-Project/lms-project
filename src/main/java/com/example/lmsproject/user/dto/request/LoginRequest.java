@@ -1,4 +1,4 @@
-package com.example.lmsproject.user.entity.dto.request;
+package com.example.lmsproject.user.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

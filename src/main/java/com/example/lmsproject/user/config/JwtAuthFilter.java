@@ -1,7 +1,7 @@
-package com.example.lmsproject.user.entity.config;
+package com.example.lmsproject.user.config;
 
-import com.example.lmsproject.user.entity.service.CustomUserDetailsService;
-import com.example.lmsproject.user.entity.service.JwtService;
+import com.example.lmsproject.user.service.CustomUserDetailsService;
+import com.example.lmsproject.user.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,14 +1,14 @@
-package com.example.lmsproject.user.entity.service;
+package com.example.lmsproject.user.service;
 
 import com.example.lmsproject.exception.AlreadyExistsException;
 import com.example.lmsproject.exception.BadRequestException;
 import com.example.lmsproject.exception.ResourceNotFoundException;
 import com.example.lmsproject.user.entity.User;
 import com.example.lmsproject.user.entity.UserRole;
-import com.example.lmsproject.user.entity.dto.request.CreateUserRequest;
-import com.example.lmsproject.user.entity.dto.request.UpdateUserRequest;
-import com.example.lmsproject.user.entity.dto.response.UserResponse;
-import com.example.lmsproject.user.entity.repository.UserRepository;
+import com.example.lmsproject.user.dto.request.CreateUserRequest;
+import com.example.lmsproject.user.dto.request.UpdateUserRequest;
+import com.example.lmsproject.user.dto.response.UserResponse;
+import com.example.lmsproject.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

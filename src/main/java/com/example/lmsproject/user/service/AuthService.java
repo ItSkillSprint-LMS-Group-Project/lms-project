@@ -1,14 +1,14 @@
-package com.example.lmsproject.user.entity.service;
+package com.example.lmsproject.user.service;
 
 import com.example.lmsproject.exception.AlreadyExistsException;
 import com.example.lmsproject.exception.BadRequestException;
 import com.example.lmsproject.exception.ForbiddenOperationException;
 import com.example.lmsproject.user.entity.User;
 import com.example.lmsproject.user.entity.UserRole;
-import com.example.lmsproject.user.entity.dto.response.AuthResponse;
-import com.example.lmsproject.user.entity.dto.request.LoginRequest;
-import com.example.lmsproject.user.entity.dto.request.RegisterRequest;
-import com.example.lmsproject.user.entity.repository.UserRepository;
+import com.example.lmsproject.user.dto.response.AuthResponse;
+import com.example.lmsproject.user.dto.request.LoginRequest;
+import com.example.lmsproject.user.dto.request.RegisterRequest;
+import com.example.lmsproject.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;

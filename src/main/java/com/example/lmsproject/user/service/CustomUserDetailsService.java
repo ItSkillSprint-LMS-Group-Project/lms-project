@@ -1,7 +1,7 @@
-package com.example.lmsproject.user.entity.service;
+package com.example.lmsproject.user.service;
 
 import com.example.lmsproject.user.entity.User;
-import com.example.lmsproject.user.entity.repository.UserRepository;
+import com.example.lmsproject.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;

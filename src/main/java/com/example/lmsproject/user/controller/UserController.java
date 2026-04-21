@@ -1,10 +1,10 @@
-package com.example.lmsproject.user.entity.controller;
+package com.example.lmsproject.user.controller;
 
 import com.example.lmsproject.user.entity.UserRole;
-import com.example.lmsproject.user.entity.dto.request.CreateUserRequest;
-import com.example.lmsproject.user.entity.dto.request.UpdateUserRequest;
-import com.example.lmsproject.user.entity.dto.response.UserResponse;
-import com.example.lmsproject.user.entity.service.UserService;
+import com.example.lmsproject.user.dto.request.CreateUserRequest;
+import com.example.lmsproject.user.dto.request.UpdateUserRequest;
+import com.example.lmsproject.user.dto.response.UserResponse;
+import com.example.lmsproject.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

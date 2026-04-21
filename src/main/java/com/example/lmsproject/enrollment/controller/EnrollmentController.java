@@ -5,7 +5,6 @@ import com.example.lmsproject.enrollment.dto.EnrollByEmailRequest;
 import com.example.lmsproject.enrollment.dto.EnrollmentResponse;
 import com.example.lmsproject.enrollment.service.EnrollmentService;
 import com.example.lmsproject.security.model.CustomUserDetails;
-import com.example.lmsproject.user.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

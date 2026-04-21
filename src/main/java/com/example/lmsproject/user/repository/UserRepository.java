@@ -1,4 +1,4 @@
-package com.example.lmsproject.user.entity.repository;
+package com.example.lmsproject.user.repository;
 
 import com.example.lmsproject.user.entity.User;
 import com.example.lmsproject.user.entity.UserRole;
