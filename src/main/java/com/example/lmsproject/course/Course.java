@@ -1,6 +1,6 @@
 package com.example.lmsproject.course;
 import com.example.lmsproject.assessment.Assessment;
-import com.example.lmsproject.assignment.Assignment;
+import com.example.lmsproject.assignment.entity.Assignment;
 import com.example.lmsproject.content.Content;
 import com.example.lmsproject.user.User;
 import jakarta.persistence.*;

@@ -1,6 +1,6 @@
 package com.example.lmsproject.assignmentSubmission;
 
-import com.example.lmsproject.assignment.Assignment;
+import com.example.lmsproject.assignment.entity.Assignment;
 import com.example.lmsproject.user.User;
 import jakarta.persistence.*;
 import lombok.*;
