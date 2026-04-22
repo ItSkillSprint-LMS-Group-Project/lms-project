@@ -27,7 +27,6 @@ public class CustomUserDetails implements UserDetails {
         this.authorities = List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
     }
 
-    // Constructor for manual creation
     public CustomUserDetails(Long id, String email, String password, UserRole role) {
         this.id = id;
         this.email = email;

@@ -20,7 +20,7 @@ public class EnrollmentController {
     public EnrollmentController(EnrollmentService enrollmentService){
         this.enrollmentService=enrollmentService;
     }
-    @PostMapping("/code")
+    @PostMapping("/enroll-by-code")
     @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<EnrollmentResponse> enrollByCourseCode(
             @RequestBody EnrollByCodeRequest request,
@@ -29,17 +29,17 @@ public class EnrollmentController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(enrollmentService.enrollByCourseCode(request, user.getId()));
     }
-    @PostMapping("/courses/{courseId}/email")
+    @PostMapping("/courses/{courseId}/enroll-by-email")
     @PreAuthorize("@courseService.isOwner(#courseId,authentication.principal.id)")
     public ResponseEntity<EnrollmentResponse>  enrollByEmail(@PathVariable Long courseId,@RequestBody EnrollByEmailRequest request){
         return ResponseEntity.status(HttpStatus.CREATED).body(enrollmentService.enrollByEmail(courseId,request));
     }
-    @GetMapping("/my-enrollments")
+    @GetMapping("/me")
     @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<List<EnrollmentResponse>> enrollmentsByStudent(@AuthenticationPrincipal CustomUserDetails user){
         return ResponseEntity.ok(enrollmentService.enrollmentsByStudent(user.getId()));
     }
-    @GetMapping("/my-students")
+    @GetMapping("/students")
     @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<List<EnrollmentResponse>> getMyStudents(
             @AuthenticationPrincipal CustomUserDetails user
