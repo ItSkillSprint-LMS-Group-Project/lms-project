@@ -1,10 +1,9 @@
 package com.example.lmsproject.assignment.entity;
 
 import com.example.lmsproject.course.entity.Course;
+import com.example.lmsproject.assignmentSubmission.AssignmentSubmission;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,15 +15,11 @@ public class Assignment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    private String title;
-    @Column
-    private String description;
-    @Column(nullable = false)
-    private LocalDateTime dueDate;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+    private String title;
+    private String description;
+    private LocalDateTime dueDate;
+    private Integer orderIndex;
 
     @ManyToOne
     @JoinColumn(name = "course_id")
