@@ -26,4 +26,7 @@ public class Assessment {
 
     @OneToMany(mappedBy = "assessment")
     private List<Question> questions;
+
+    @Column(nullable = false)
+    private AssessmentType assessmentType;
 }
