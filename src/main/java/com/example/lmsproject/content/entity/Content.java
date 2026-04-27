@@ -22,6 +22,9 @@ public class Content {
     @Column
     private String text;
 
+    @Column
+    private Integer orderIndex;
+
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
