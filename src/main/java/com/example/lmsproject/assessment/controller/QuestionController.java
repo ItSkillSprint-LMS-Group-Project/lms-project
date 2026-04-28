@@ -18,19 +18,19 @@ public class QuestionController {
 
     private final QuestionService questionService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
+    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canModify(#request.assessmentId(), authentication.principal.id)")
     @PostMapping
     public ResponseEntity<QuestionResponse> createQuestion(@Valid @RequestBody CreateQuestionRequest request) {
         return ResponseEntity.status(201).body(questionService.createQuestion(request));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER', 'STUDENT')")
+    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canAccess(#assessmentId, authentication.principal.id)")
     @GetMapping("/assessment/{assessmentId}")
     public ResponseEntity<List<QuestionResponse>> getQuestionsByAssessment(@PathVariable Long assessmentId) {
         return ResponseEntity.ok(questionService.getQuestionsByAssessment(assessmentId));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
+    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canModifyQuestion(#id, authentication.principal.id)")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteQuestion(@PathVariable Long id) {
         questionService.deleteQuestion(id);

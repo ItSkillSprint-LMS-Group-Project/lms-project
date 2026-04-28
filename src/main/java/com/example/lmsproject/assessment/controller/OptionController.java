@@ -18,19 +18,19 @@ public class OptionController {
 
     private final OptionService optionService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
+    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canModifyQuestion(#request.questionId(), authentication.principal.id)")
     @PostMapping
     public ResponseEntity<OptionTeacherResponse> createOption(@Valid @RequestBody CreateOptionRequest request) {
         return ResponseEntity.status(201).body(optionService.createOption(request));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
+    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canModifyQuestion(#questionId, authentication.principal.id)")
     @GetMapping("/question/{questionId}")
     public ResponseEntity<List<OptionTeacherResponse>> getOptionsByQuestion(@PathVariable Long questionId) {
         return ResponseEntity.ok(optionService.getOptionsByQuestion(questionId));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
+    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canModifyOption(#id, authentication.principal.id)")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteOption(@PathVariable Long id) {
         optionService.deleteOption(id);

@@ -25,32 +25,32 @@ public class AssessmentController {
         return ResponseEntity.ok(assessmentService.getAllAssessments());
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER', 'STUDENT')")
+    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canAccess(#id, authentication.principal.id)")
     @GetMapping("/{id}")
     public ResponseEntity<AssessmentResponse> getAssessmentById(@PathVariable Long id) {
         return ResponseEntity.ok(assessmentService.getAssessmentById(id));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER', 'STUDENT')")
+    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canAccessCourseAssessments(#courseId, authentication.principal.id)")
     @GetMapping("/course/{courseId}")
     public ResponseEntity<List<AssessmentResponse>> getAssessmentsByCourse(@PathVariable Long courseId) {
         return ResponseEntity.ok(assessmentService.getAssessmentsByCourse(courseId));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
+    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canCreateForCourse(#request.courseId(), authentication.principal.id)")
     @PostMapping
     public ResponseEntity<AssessmentResponse> createAssessment(@Valid @RequestBody CreateAssessmentRequest request) {
         return ResponseEntity.status(201).body(assessmentService.createAssessment(request));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
+    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canModify(#id, authentication.principal.id)")
     @PutMapping("/{id}")
     public ResponseEntity<AssessmentResponse> updateAssessment(@PathVariable Long id,
                                                                @Valid @RequestBody UpdateAssessmentRequest request) {
         return ResponseEntity.ok(assessmentService.updateAssessment(id, request));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
+    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canModify(#id, authentication.principal.id)")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteAssessment(@PathVariable Long id) {
         assessmentService.deleteAssessment(id);
