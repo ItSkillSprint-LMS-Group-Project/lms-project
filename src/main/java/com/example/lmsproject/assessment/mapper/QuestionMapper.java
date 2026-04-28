@@ -13,7 +13,9 @@ import java.util.List;
 public class QuestionMapper {
 
     public QuestionResponse toStudentResponse(Question question) {
-        List<OptionResponse> options = question.getOptions()
+        List<OptionResponse> options = question.getOptions() == null
+                ? List.of()
+                : question.getOptions()
                 .stream()
                 .map(this::toOptionResponse)
                 .toList();
