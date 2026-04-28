@@ -9,28 +9,37 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "assessment_submissions")
-@Getter @Setter
+@Table(
+        name = "assessment_submissions",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"assessment_id", "student_id"})
+        }
+)
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AssessmentSubmission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private Integer totalScore;
+    @Column(nullable = false)
+    private Integer totalScore = 0;
 
     @CreationTimestamp
+    @Column(nullable = false, updatable = false)
     private LocalDateTime submittedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "assessment_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assessment_id", nullable = false)
     private Assessment assessment;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id", nullable = false)
     private User student;
 
-    @OneToMany(mappedBy = "submission")
+    @OneToMany(mappedBy = "submission", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers;
 }
