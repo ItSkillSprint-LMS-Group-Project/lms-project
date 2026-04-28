@@ -31,15 +31,10 @@ public class AssessmentService {
     private final AssessmentSubmissionRepository submissionRepository;
 
     public AssessmentResponse createAssessment(CreateAssessmentRequest request) {
-        Course course = courseRepository.findById(request.courseId())
+        Course course = courseRepository.findById(request.getCourseId())
                 .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
 
-        Assessment assessment = new Assessment();
-        assessment.setTitle(request.title());
-        assessment.setType(request.type());
-        assessment.setTimeLimitMinutes(request.timeLimitMinutes());
-        assessment.setExternalLink(request.externalLink());
-        assessment.setCourse(course);
+        Assessment assessment=AssessmentMapper.toEntity(request,course);
 
         return assessmentMapper.toResponse(assessmentRepository.save(assessment));
     }
@@ -65,11 +60,7 @@ public class AssessmentService {
 
     public AssessmentResponse updateAssessment(Long id, UpdateAssessmentRequest request) {
         Assessment assessment = findAssessmentById(id);
-
-        assessment.setTitle(request.title());
-        assessment.setType(request.type());
-        assessment.setTimeLimitMinutes(request.timeLimitMinutes());
-        assessment.setExternalLink(request.externalLink());
+        assessmentMapper.updateEntity(assessment,request);
 
         return assessmentMapper.toResponse(assessmentRepository.save(assessment));
     }

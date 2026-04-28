@@ -1,7 +1,13 @@
 package com.example.lmsproject.assessment.dto.response;
 
-public record OptionResponse(
-        Long id,
-        String text
-) {
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class OptionResponse {
+
+    private Long id;
+    private String text;
 }

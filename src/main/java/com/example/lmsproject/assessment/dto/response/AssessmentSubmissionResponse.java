@@ -1,14 +1,20 @@
 package com.example.lmsproject.assessment.dto.response;
 
+import lombok.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record AssessmentSubmissionResponse(
-        Long id,
-        Long assessmentId,
-        Long studentId,
-        Integer totalScore,
-        LocalDateTime submittedAt,
-        List<AnswerResponse> answers
-) {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class AssessmentSubmissionResponse {
+
+    private Long id;
+    private Long assessmentId;
+    private Long studentId;
+    private Integer totalScore;
+    private LocalDateTime submittedAt;
+    private List<AnswerResponse> answers;
 }

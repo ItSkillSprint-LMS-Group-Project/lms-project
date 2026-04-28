@@ -1,4 +1,5 @@
-﻿package com.example.lmsproject.content.mapper;
+package com.example.lmsproject.content.mapper;
+
 import com.example.lmsproject.content.entity.Content;
 import com.example.lmsproject.content.dto.request.ContentCreateRequest;
 import com.example.lmsproject.content.dto.response.ContentResponse;
@@ -15,6 +16,7 @@ public class ContentMapper {
         content.setCourse(course);
         return content;
     }
+
     public static ContentResponse toResponse(Content content) {
         ContentResponse response = new ContentResponse();
         response.setId(content.getId());
@@ -26,9 +28,11 @@ public class ContentMapper {
         response.setCourseTitle(content.getCourse().getTitle());
         return response;
     }
+
     public static List<ContentResponse> toResponseList(List<Content> contents) {
         return contents.stream().map(ContentMapper::toResponse).toList();
     }
+
     public static void updateEntity(Content content, ContentUpdateRequest request) {
         if (request.getTitle() != null) {
             content.setTitle(request.getTitle());

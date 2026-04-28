@@ -12,14 +12,12 @@ import com.example.lmsproject.enrollment.repository.EnrollmentRepository;
 import com.example.lmsproject.exception.ResourceNotFoundException;
 import com.example.lmsproject.exception.UnauthorizedException;
 import jakarta.transaction.Transactional;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 
 @Service
-public class   AssignmentService {
+public class AssignmentService {
 
     private final AssignmentRepository assignmentRepository;
     private final CourseRepository courseRepository;
@@ -46,22 +44,8 @@ public class   AssignmentService {
         return AssignmentMapper.toResponse(assignmentRepository.save(assignment));
     }
 
-    public AssignmentResponse getAssignmentById(Long id, Long userId, Collection<? extends GrantedAuthority> authorities) {
+    public AssignmentResponse getAssignmentById(Long id) {
         Assignment assignment = findAssignment(id);
-
-        boolean isTeacher = authorities.stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_TEACHER"));
-        boolean isStudent = authorities.stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_STUDENT"));
-
-        if (isTeacher) {
-            if (!assignment.getCourse().getTeacher().getId().equals(userId)) {
-                throw new UnauthorizedException("Unauthorized");
-            }
-        } else if (isStudent) {
-            if (!enrollmentRepository.existsByCourseIdAndStudentId(assignment.getCourse().getId(), userId)) {
-                throw new UnauthorizedException("Unauthorized");
-            }
-        }
-
         return AssignmentMapper.toResponse(assignment);
     }
 
@@ -83,30 +67,38 @@ public class   AssignmentService {
     }
 
     @Transactional
-    public AssignmentResponse updateAssignment(Long id, AssignmentUpdateRequest request, Long teacherId) {
+    public AssignmentResponse updateAssignment(Long id, AssignmentUpdateRequest request) {
         Assignment assignment = findAssignment(id);
-
-        if (!assignment.getCourse().getTeacher().getId().equals(teacherId)) {
-            throw new UnauthorizedException("Unauthorized");
-        }
-
         AssignmentMapper.updateEntity(assignment, request);
         return AssignmentMapper.toResponse(assignmentRepository.save(assignment));
     }
 
     @Transactional
-    public void deleteAssignment(Long id, Long teacherId) {
+    public void deleteAssignment(Long id) {
         Assignment assignment = findAssignment(id);
-
-        if (!assignment.getCourse().getTeacher().getId().equals(teacherId)) {
-            throw new UnauthorizedException("Unauthorized");
-        }
-
         assignmentRepository.delete(assignment);
     }
 
     private Assignment findAssignment(Long id) {
         return assignmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Assignment not found"));
+    }
+
+    public boolean canAccess(Long assignmentId, Long userId) {
+        Assignment assignment = assignmentRepository.findById(assignmentId).orElse(null);
+        if (assignment == null) return false;
+
+        Long courseId = assignment.getCourse().getId();
+        return courseRepository.existsByIdAndTeacherId(courseId, userId) ||
+                enrollmentRepository.existsByCourseIdAndStudentId(courseId, userId);
+    }
+
+    public boolean canModify(Long assignmentId, Long userId) {
+        Assignment assignment = assignmentRepository.findById(assignmentId).orElse(null);
+        if (assignment == null) return false;
+        return courseRepository.existsByIdAndTeacherId(assignment.getCourse().getId(), userId);
+    }
+    public boolean canCreateForCourse(Long courseId, Long userId) {
+        return courseRepository.existsByIdAndTeacherId(courseId, userId);
     }
 }

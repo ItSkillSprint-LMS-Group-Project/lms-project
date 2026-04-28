@@ -8,6 +8,7 @@ import com.example.lmsproject.user.entity.UserRole;
 import com.example.lmsproject.user.dto.request.CreateUserRequest;
 import com.example.lmsproject.user.dto.request.UpdateUserRequest;
 import com.example.lmsproject.user.dto.response.UserResponse;
+import com.example.lmsproject.user.mapper.UserMapper;
 import com.example.lmsproject.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,19 +21,14 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
     public UserResponse createUser(CreateUserRequest request) {
         String email = normalizeEmail(request.getEmail());
 
         validateCreateRequest(request, email);
 
-        User user = new User();
-        user.setFirstName(request.getFirstName().trim());
-        user.setLastName(request.getLastName().trim());
-        user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(request.getRole());
+        User user =userMapper.toEntity(request);
 
         if (request.getRole() == UserRole.STUDENT) {
             user.setStudentIdNumber(request.getStudentIdNumber().trim());
@@ -43,19 +39,19 @@ public class UserService {
         }
 
         User savedUser = userRepository.save(user);
-        return mapToResponse(savedUser);
+        return userMapper.ToResponse(savedUser);
     }
 
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(this::mapToResponse)
+                .map(userMapper::ToResponse)
                 .toList();
     }
 
     public UserResponse getUserById(Long id) {
         User user = findUserById(id);
-        return mapToResponse(user);
+        return userMapper.ToResponse(user);
     }
 
     public List<UserResponse> searchUsersByName(String name) {
@@ -64,14 +60,14 @@ public class UserService {
         return userRepository
                 .findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(normalizedName, normalizedName)
                 .stream()
-                .map(this::mapToResponse)
+                .map(userMapper::ToResponse)
                 .toList();
     }
 
     public List<UserResponse> getUsersByRole(UserRole role) {
         return userRepository.findByRole(role)
                 .stream()
-                .map(this::mapToResponse)
+                .map(userMapper::ToResponse)
                 .toList();
     }
 
@@ -129,7 +125,7 @@ public class UserService {
         }
 
         User updatedUser = userRepository.save(user);
-        return mapToResponse(updatedUser);
+        return userMapper.ToResponse(updatedUser);
     }
 
     public void deleteUser(Long id) {
@@ -180,17 +176,7 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
 
-    private UserResponse mapToResponse(User user) {
-        return new UserResponse(
-                user.getId(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.getRole(),
-                user.getStudentIdNumber(),
-                user.getTeacherIdNumber()
-        );
-    }
+
 
     private String normalizeEmail(String email) {
         return email.trim().toLowerCase();

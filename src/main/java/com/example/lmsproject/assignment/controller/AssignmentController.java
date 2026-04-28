@@ -5,6 +5,7 @@ import com.example.lmsproject.assignment.dto.response.AssignmentResponse;
 import com.example.lmsproject.assignment.dto.request.AssignmentUpdateRequest;
 import com.example.lmsproject.assignment.service.AssignmentService;
 import com.example.lmsproject.security.model.CustomUserDetails;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,18 +25,18 @@ public class AssignmentController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('TEACHER')")
+    @PreAuthorize("@assignmentService.canCreateForCourse(#request.courseId(), authentication.principal.id) or hasRole('ADMIN')")
     public ResponseEntity<AssignmentResponse> createAssignment(
-            @RequestBody AssignmentRequest request,
+            @RequestBody @Valid AssignmentRequest request,
             @AuthenticationPrincipal CustomUserDetails user) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(assignmentService.createAssignment(request, user.getId()));
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('TEACHER') or hasRole('STUDENT')")
-    public ResponseEntity<AssignmentResponse> getAssignmentById(@PathVariable Long id, @AuthenticationPrincipal CustomUserDetails user) {
-        return ResponseEntity.ok(assignmentService.getAssignmentById(id, user.getId(), user.getAuthorities()));
+    @PreAuthorize("@assignmentService.canAccess(#id, authentication.principal.id)")
+    public ResponseEntity<AssignmentResponse> getAssignmentById(@PathVariable Long id) {
+        return ResponseEntity.ok(assignmentService.getAssignmentById(id));
     }
 
     @GetMapping("/course/{courseId}")
@@ -46,25 +47,23 @@ public class AssignmentController {
 
     @GetMapping("/me")
     @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<List<AssignmentResponse>> getAssignmentsForStudent(@AuthenticationPrincipal CustomUserDetails user) {
+    public ResponseEntity<List<AssignmentResponse>> getAssignmentsForStudent(
+            @AuthenticationPrincipal CustomUserDetails user) {
         return ResponseEntity.ok(assignmentService.getAssignmentsForStudent(user.getId()));
     }
 
     @PatchMapping("/{id}")
-    @PreAuthorize("hasRole('TEACHER')")
+    @PreAuthorize("@assignmentService.canModify(#id, authentication.principal.id)")
     public ResponseEntity<AssignmentResponse> updateAssignment(
             @PathVariable Long id,
-            @RequestBody AssignmentUpdateRequest request,
-            @AuthenticationPrincipal CustomUserDetails user) {
-        return ResponseEntity.ok(assignmentService.updateAssignment(id, request, user.getId()));
+            @RequestBody AssignmentUpdateRequest request) {
+        return ResponseEntity.ok(assignmentService.updateAssignment(id, request));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('TEACHER')")
-    public ResponseEntity<Void> deleteAssignment(
-            @PathVariable Long id,
-            @AuthenticationPrincipal CustomUserDetails user) {
-        assignmentService.deleteAssignment(id, user.getId());
+    @PreAuthorize("@assignmentService.canModify(#id, authentication.principal.id)")
+    public ResponseEntity<Void> deleteAssignment(@PathVariable Long id) {
+        assignmentService.deleteAssignment(id);
         return ResponseEntity.noContent().build();
     }
 }

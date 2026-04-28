@@ -1,14 +1,18 @@
 package com.example.lmsproject.assessment.dto.request;
 
-import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import jakarta.validation.constraints.*;
 
-public record SubmitAnswerRequest(
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class SubmitAnswerRequest {
 
         @NotNull(message = "Question id is required")
-        Long questionId,
+        private Long questionId;
 
-        Long selectedOptionId,
+        private Long selectedOptionId;
 
-        String textAnswer
-) {
+        private String textAnswer;
 }

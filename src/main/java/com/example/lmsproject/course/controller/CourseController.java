@@ -5,6 +5,7 @@ import com.example.lmsproject.course.dto.CourseResponse;
 import com.example.lmsproject.course.dto.CourseUpdateRequest;
 import com.example.lmsproject.course.service.CourseService;
 import com.example.lmsproject.security.model.CustomUserDetails;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,19 +24,19 @@ public class CourseController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('TEACHER')")
-    public ResponseEntity<CourseResponse> createCourse(@RequestBody CourseRequest courseRequest, @AuthenticationPrincipal CustomUserDetails user){
+    @PreAuthorize("hasRole('TEACHER')or hasRole('ADMIN')")
+    public ResponseEntity<CourseResponse> createCourse(@RequestBody @Valid CourseRequest courseRequest, @AuthenticationPrincipal CustomUserDetails user){
         CourseResponse courseResponse = courseService.createCourse(courseRequest, user.getId());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(courseResponse);
     }
     @GetMapping("/{id}")
-    @PreAuthorize("@courseService.isOwner(#id, authentication.principal.id) or hasRole('ADMIN')")
+    @PreAuthorize("@courseService.canAccessCourse(#id, authentication.principal.id) or hasRole('ADMIN')")
     public ResponseEntity<CourseResponse> getCourseById(@PathVariable Long id) {
         return ResponseEntity.ok(courseService.getCourseById(id));
     }
-    @GetMapping("/my")
+    @GetMapping("/me")
     @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<List<CourseResponse>> getCourses(@AuthenticationPrincipal CustomUserDetails user) {
         return ResponseEntity.ok(courseService.getCoursesByTeacher(user.getId()));
@@ -48,7 +49,7 @@ public class CourseController {
 
 
     @PatchMapping("/{id}")
-    @PreAuthorize("@courseService.isOwner(#id, authentication.principal.id) or hasRole('ADMIN')")
+    @PreAuthorize("@courseService.isOwner(#id, authentication.principal.id)")
     public ResponseEntity<CourseResponse> updateCourse(
             @PathVariable Long id,
             @RequestBody CourseUpdateRequest request

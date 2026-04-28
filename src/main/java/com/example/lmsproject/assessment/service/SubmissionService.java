@@ -36,7 +36,7 @@ public class SubmissionService {
             throw new BadRequestException("Only students can submit assessments");
         }
 
-        Assessment assessment = assessmentService.findAssessmentById(request.assessmentId());
+        Assessment assessment = assessmentService.findAssessmentById(request.getAssessmentId());
 
         if (submissionRepository.existsByAssessmentIdAndStudentId(assessment.getId(), student.getId())) {
             throw new BadRequestException("You have already submitted this assessment");
@@ -49,8 +49,8 @@ public class SubmissionService {
         List<Answer> answers = new ArrayList<>();
         int totalScore = 0;
 
-        for (SubmitAnswerRequest answerRequest : request.answers()) {
-            Question question = questionService.findQuestionById(answerRequest.questionId());
+        for (SubmitAnswerRequest answerRequest : request.getAnswers()) {
+            Question question = questionService.findQuestionById(answerRequest.getQuestionId());
 
             if (!question.getAssessment().getId().equals(assessment.getId())) {
                 throw new BadRequestException("Question does not belong to this assessment");
@@ -61,11 +61,11 @@ public class SubmissionService {
             answer.setQuestion(question);
 
             if (question.getType() == QuestionType.MCQ) {
-                if (answerRequest.selectedOptionId() == null) {
+                if (answerRequest.getSelectedOptionId() == null) {
                     throw new BadRequestException("Selected option is required for MCQ questions");
                 }
 
-                Option selectedOption = optionService.findOptionById(answerRequest.selectedOptionId());
+                Option selectedOption = optionService.findOptionById(answerRequest.getSelectedOptionId());
 
                 if (!selectedOption.getQuestion().getId().equals(question.getId())) {
                     throw new BadRequestException("Selected option does not belong to this question");
@@ -79,11 +79,11 @@ public class SubmissionService {
             }
 
             if (question.getType() == QuestionType.OPEN) {
-                if (answerRequest.textAnswer() == null || answerRequest.textAnswer().isBlank()) {
+                if (answerRequest.getTextAnswer() == null || answerRequest.getTextAnswer().isBlank()) {
                     throw new BadRequestException("Text answer is required for open questions");
                 }
 
-                answer.setTextAnswer(answerRequest.textAnswer());
+                answer.setTextAnswer(answerRequest.getTextAnswer());
             }
 
             answers.add(answer);

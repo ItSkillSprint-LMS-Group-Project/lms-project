@@ -54,10 +54,11 @@ public class EnrollmentService {
         return EnrollmentMapper.toResponseList(enrollmentRepository.findByStudentId(studentId));
     }
     public List<EnrollmentResponse> getStudentsByTeacher(Long teacherId) {
-
         List<Enrollment> enrollments =
                 enrollmentRepository.findByCourseTeacherId(teacherId);
-
         return EnrollmentMapper.toResponseList(enrollments);
+    }
+    public boolean isEnrolled(Long courseId, Long userId){
+        return enrollmentRepository.existsByCourseIdAndStudentId(courseId, userId);
     }
 }

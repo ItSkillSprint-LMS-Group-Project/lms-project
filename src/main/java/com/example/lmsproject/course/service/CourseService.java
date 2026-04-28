@@ -6,6 +6,7 @@ import com.example.lmsproject.course.dto.CourseUpdateRequest;
 import com.example.lmsproject.course.entity.Course;
 import com.example.lmsproject.course.mapper.CourseMapper;
 import com.example.lmsproject.course.repository.CourseRepository;
+import com.example.lmsproject.enrollment.service.EnrollmentService;
 import com.example.lmsproject.exception.ResourceNotFoundException;
 import com.example.lmsproject.user.entity.User;
 import com.example.lmsproject.user.repository.UserRepository;
@@ -20,11 +21,13 @@ public class CourseService {
 
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
+    private final EnrollmentService enrollmentService;
 
     public CourseService(CourseRepository courseRepository,
-                         UserRepository userRepository) {
+                         UserRepository userRepository, EnrollmentService enrollmentService) {
         this.courseRepository = courseRepository;
         this.userRepository = userRepository;
+        this.enrollmentService = enrollmentService;
     }
 
     @Transactional
@@ -72,6 +75,11 @@ public class CourseService {
 
     public boolean isOwner(Long courseId, Long userId) {
         return courseRepository.existsByIdAndTeacherId(courseId, userId);
+    }
+
+    public boolean canAccessCourse(Long courseId, Long userId) {
+        return isOwner(courseId, userId)
+                || enrollmentService.isEnrolled(courseId, userId);
     }
 
     private Course findCourse(Long id) {
