@@ -14,6 +14,7 @@ import com.example.lmsproject.assignment.repository.AssignmentSubmissionReposito
 import com.example.lmsproject.course.entity.Course;
 import com.example.lmsproject.course.repository.CourseRepository;
 import com.example.lmsproject.enrollment.repository.EnrollmentRepository;
+import com.example.lmsproject.exception.AlreadyExistsException;
 import com.example.lmsproject.exception.ResourceNotFoundException;
 import com.example.lmsproject.exception.UnauthorizedException;
 import com.example.lmsproject.user.entity.User;
@@ -84,7 +85,7 @@ public class AssignmentService {
     @Transactional
     public AssignmentSubmissionResponse submitAssignment(Long assignmentId, AssignmentSubmissionRequest request, Long studentId) {
         if(assignmentSubmissionRepository.existsByStudentId(studentId)) {
-            throw new RuntimeException("Already submitted");
+            throw new AlreadyExistsException("Already submitted");
         }
         Assignment assignment = assignmentRepository.findById(assignmentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Assignment not found"));

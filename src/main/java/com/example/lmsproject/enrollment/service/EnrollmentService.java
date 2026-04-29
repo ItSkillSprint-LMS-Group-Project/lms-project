@@ -8,6 +8,7 @@ import com.example.lmsproject.enrollment.dto.EnrollmentResponse;
 import com.example.lmsproject.enrollment.entity.Enrollment;
 import com.example.lmsproject.enrollment.mapper.EnrollmentMapper;
 import com.example.lmsproject.enrollment.repository.EnrollmentRepository;
+import com.example.lmsproject.exception.AlreadyExistsException;
 import com.example.lmsproject.exception.ResourceNotFoundException;
 import com.example.lmsproject.user.entity.User;
 import com.example.lmsproject.user.repository.UserRepository;
@@ -32,7 +33,7 @@ public class EnrollmentService {
         User student = userRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
         if (enrollmentRepository.existsByCourseIdAndStudentId(course.getId(), studentId)) {
-            throw new RuntimeException("Already enrolled");
+            throw new AlreadyExistsException("Already enrolled");
         }
         Enrollment enrollment = EnrollmentMapper.toEntity(course, student);
         enrollmentRepository.save(enrollment);
@@ -44,7 +45,7 @@ public class EnrollmentService {
         User student=userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
         if (enrollmentRepository.existsByCourseIdAndStudentId(course.getId(), student.getId())) {
-            throw new RuntimeException("Already enrolled");
+            throw new AlreadyExistsException("Already enrolled");
         }
         Enrollment enrollment= EnrollmentMapper.toEntity(course,student);
         enrollmentRepository.save(enrollment);
