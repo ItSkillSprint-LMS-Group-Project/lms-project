@@ -10,7 +10,6 @@ public class AssignmentResponse {
     private String title;
     private String description;
     private LocalDateTime dueDate;
-    private Integer orderIndex;
     private Long courseId;
     private String courseTitle;
 }

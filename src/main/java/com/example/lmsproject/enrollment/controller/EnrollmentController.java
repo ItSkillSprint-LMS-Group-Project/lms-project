@@ -35,9 +35,5 @@ public class EnrollmentController {
     public ResponseEntity<List<EnrollmentResponse>> enrollmentsByStudent(@AuthenticationPrincipal CustomUserDetails user){
         return ResponseEntity.ok(enrollmentService.enrollmentsByStudent(user.getId()));
     }
-    @GetMapping("/students")
-    @PreAuthorize("hasRole('TEACHER')")
-    public ResponseEntity<List<EnrollmentResponse>> getMyStudents(@AuthenticationPrincipal CustomUserDetails user) {
-        return ResponseEntity.ok(enrollmentService.getStudentsByTeacher(user.getId()));
-    }
+
 }

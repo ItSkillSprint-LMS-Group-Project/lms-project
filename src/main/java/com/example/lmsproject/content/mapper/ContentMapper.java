@@ -12,7 +12,6 @@ public class ContentMapper {
         content.setTitle(request.getTitle());
         content.setType(request.getType());
         content.setText(request.getText());
-        content.setOrderIndex(request.getOrderIndex());
         content.setCourse(course);
         return content;
     }
@@ -23,7 +22,6 @@ public class ContentMapper {
         response.setTitle(content.getTitle());
         response.setType(content.getType());
         response.setText(content.getText());
-        response.setOrderIndex(content.getOrderIndex());
         response.setCourseId(content.getCourse().getId());
         response.setCourseTitle(content.getCourse().getTitle());
         return response;
@@ -43,8 +41,6 @@ public class ContentMapper {
         if (request.getText() != null) {
             content.setText(request.getText());
         }
-        if (request.getOrderIndex() != null) {
-            content.setOrderIndex(request.getOrderIndex());
-        }
+
     }
 }

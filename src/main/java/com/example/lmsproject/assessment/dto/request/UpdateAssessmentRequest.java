@@ -15,7 +15,7 @@ public class UpdateAssessmentRequest {
         private String title;
 
         @NotNull(message = "Assessment type is required")
-        private AssessmentType type;
+        private AssessmentType assessmentType;
 
         @NotNull(message = "Time limit is required")
         @Min(value = 1, message = "Time limit must be at least 1 minute")

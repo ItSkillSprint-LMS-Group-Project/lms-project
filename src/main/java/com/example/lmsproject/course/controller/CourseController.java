@@ -5,6 +5,8 @@ import com.example.lmsproject.course.dto.CourseResponse;
 import com.example.lmsproject.course.dto.CourseUpdateRequest;
 import com.example.lmsproject.course.service.CourseService;
 import com.example.lmsproject.security.model.CustomUserDetails;
+import com.example.lmsproject.user.dto.response.UserResponse;
+import com.example.lmsproject.user.entity.User;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +40,13 @@ public class CourseController {
     }
     @GetMapping("/me")
     @PreAuthorize("hasRole('TEACHER')")
-    public ResponseEntity<List<CourseResponse>> getCourses(@AuthenticationPrincipal CustomUserDetails user) {
+    public ResponseEntity<List<CourseResponse>> getMyCourses(@AuthenticationPrincipal CustomUserDetails user) {
         return ResponseEntity.ok(courseService.getCoursesByTeacher(user.getId()));
+    }
+    @GetMapping("/{id}/students")
+    @PreAuthorize("@courseService.isOwner(#id, authentication.principal.id)")
+    public ResponseEntity<List<UserResponse>> getCourseStudents(@PathVariable Long id) {
+        return ResponseEntity.ok(courseService.getStudentsByCourse(id));
     }
     @GetMapping()
     @PreAuthorize("hasRole('ADMIN')")

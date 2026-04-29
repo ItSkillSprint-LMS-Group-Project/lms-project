@@ -9,5 +9,4 @@ public class AssignmentUpdateRequest {
     private String title;
     private String description;
     private LocalDateTime dueDate;
-    private Integer orderIndex;
 }

@@ -18,7 +18,7 @@ public class ContentController {
         this.contentService = contentService;
     }
     @PostMapping
-    @PreAuthorize("@contentService.canCreateForCourse(#request.courseId(), authentication.principal.id) or hasRole('ADMIN')")
+    @PreAuthorize("@contentService.canCreateForCourse(#request.getCourseId(), authentication.principal.id) or hasRole('ADMIN')")
     public ResponseEntity<ContentResponse> createContent(
             @RequestBody ContentCreateRequest request,
             @AuthenticationPrincipal CustomUserDetails user) {

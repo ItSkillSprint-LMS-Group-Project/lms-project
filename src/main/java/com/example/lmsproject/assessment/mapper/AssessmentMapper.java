@@ -13,7 +13,7 @@ public class AssessmentMapper {
     public static Assessment toEntity(CreateAssessmentRequest request, Course course) {
         Assessment assessment = new Assessment();
         assessment.setTitle(request.getTitle());
-        assessment.setType(request.getType());
+        assessment.setAssessmentType(request.getAssessmentType());
         assessment.setTimeLimitMinutes(request.getTimeLimitMinutes());
         assessment.setExternalLink(request.getExternalLink());
         assessment.setCourse(course);
@@ -24,7 +24,7 @@ public class AssessmentMapper {
         return new AssessmentResponse(
                 assessment.getId(),
                 assessment.getTitle(),
-                assessment.getType(),
+                assessment.getAssessmentType(),
                 assessment.getTimeLimitMinutes(),
                 assessment.getExternalLink(),
                 assessment.getCourse().getId()
@@ -36,8 +36,8 @@ public class AssessmentMapper {
             assessment.setTitle(request.getTitle());
         }
 
-        if (request.getType() != null) {
-            assessment.setType(request.getType());
+        if (request.getAssessmentType() != null) {
+            assessment.setAssessmentType(request.getAssessmentType());
         }
 
         if (request.getTimeLimitMinutes() != null) {

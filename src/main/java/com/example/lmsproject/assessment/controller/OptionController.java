@@ -18,7 +18,7 @@ public class OptionController {
 
     private final OptionService optionService;
 
-    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canModifyQuestion(#request.questionId(), authentication.principal.id)")
+    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canModifyQuestion(#request.getQuestionId(), authentication.principal.id)")
     @PostMapping
     public ResponseEntity<OptionTeacherResponse> createOption(@Valid @RequestBody CreateOptionRequest request) {
         return ResponseEntity.status(201).body(optionService.createOption(request));

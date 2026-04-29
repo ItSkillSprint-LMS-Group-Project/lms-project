@@ -8,5 +8,4 @@ public class ContentUpdateRequest {
     private String title;
     private ContentType type;
     private String text;
-    private Integer orderIndex;
 }

@@ -14,7 +14,7 @@ public class UserMapper {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User toEntity(CreateUserRequest request){
+    public  User toEntity(CreateUserRequest request){
         User user=new User();
         user.setFirstName(request.getFirstName().trim());
         user.setLastName(request.getLastName().trim());
@@ -23,7 +23,7 @@ public class UserMapper {
         user.setRole(request.getRole());
         return user;
     }
-    public UserResponse ToResponse(User user) {
+    public  UserResponse ToResponse(User user) {
         return new UserResponse(
                 user.getId(),
                 user.getFirstName(),

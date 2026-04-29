@@ -15,7 +15,7 @@ public class CreateAssessmentRequest {
         private String title;
 
         @NotNull(message = "Assessment type is required")
-        private AssessmentType type;
+        private AssessmentType assessmentType;
 
         @NotNull(message = "Course id is required")
         private Long courseId;

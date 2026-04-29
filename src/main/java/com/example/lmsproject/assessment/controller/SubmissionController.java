@@ -20,7 +20,7 @@ public class SubmissionController {
 
     private final SubmissionService submissionService;
 
-    @PreAuthorize("hasRole('STUDENT') and @assessmentService.canAccess(#request.assessmentId(), authentication.principal.id)")
+    @PreAuthorize("hasRole('STUDENT') and @assessmentService.canAccess(#request.getAssessmentId(), authentication.principal.id)")
     @PostMapping
     public ResponseEntity<AssessmentSubmissionResponse> submitAssessment(
             @Valid @RequestBody SubmitAssessmentRequest request,

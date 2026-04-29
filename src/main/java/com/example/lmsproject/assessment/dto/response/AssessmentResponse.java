@@ -11,7 +11,7 @@ public class AssessmentResponse {
 
     private Long id;
     private String title;
-    private AssessmentType type;
+    private AssessmentType assessmentType;
     private Integer timeLimitMinutes;
     private String externalLink;
     private Long courseId;

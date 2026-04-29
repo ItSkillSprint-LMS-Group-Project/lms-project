@@ -18,7 +18,7 @@ public class QuestionController {
 
     private final QuestionService questionService;
 
-    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canModify(#request.assessmentId(), authentication.principal.id)")
+    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canModify(#request.getAssessmentId(), authentication.principal.id)")
     @PostMapping
     public ResponseEntity<QuestionResponse> createQuestion(@Valid @RequestBody CreateQuestionRequest request) {
         return ResponseEntity.status(201).body(questionService.createQuestion(request));
