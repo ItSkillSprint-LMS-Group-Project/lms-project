@@ -208,3 +208,8 @@ lms-project/
 ## 👥 Team
 
 This project was built as a group project under the **ItSkillSprint** program.
+
+## 📝 Task Management
+
+We used Jira to manage tasks among ourselves.
+https://mammadzadaaslan05.atlassian.net/jira/software/projects/LMS/boards/1
