@@ -24,7 +24,6 @@ public class CreateAssessmentRequest {
         @Min(value = 1, message = "Time limit must be at least 1 minute")
         private Integer timeLimitMinutes;
 
-        @Size(max = 500, message = "External link must be less than 500 characters")
         private String externalLink;
 
 }
