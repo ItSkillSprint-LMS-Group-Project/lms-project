@@ -21,13 +21,9 @@ public class QuestionService {
     private final QuestionMapper questionMapper;
 
     public QuestionResponse createQuestion(CreateQuestionRequest request) {
-        Assessment assessment = assessmentService.findAssessmentById(request.assessmentId());
+        Assessment assessment = assessmentService.findAssessmentById(request.getAssessmentId());
 
-        Question question = new Question();
-        question.setText(request.text());
-        question.setType(request.type());
-        question.setPoints(request.points());
-        question.setAssessment(assessment);
+        Question question = questionMapper.toEntity(request,assessment);
 
         return questionMapper.toStudentResponse(questionRepository.save(question));
     }

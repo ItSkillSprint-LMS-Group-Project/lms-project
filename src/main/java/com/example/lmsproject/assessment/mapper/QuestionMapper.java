@@ -1,8 +1,11 @@
 package com.example.lmsproject.assessment.mapper;
 
+import com.example.lmsproject.assessment.dto.request.CreateOptionRequest;
+import com.example.lmsproject.assessment.dto.request.CreateQuestionRequest;
 import com.example.lmsproject.assessment.dto.response.OptionResponse;
 import com.example.lmsproject.assessment.dto.response.OptionTeacherResponse;
 import com.example.lmsproject.assessment.dto.response.QuestionResponse;
+import com.example.lmsproject.assessment.entity.Assessment;
 import com.example.lmsproject.assessment.entity.Option;
 import com.example.lmsproject.assessment.entity.Question;
 import org.springframework.stereotype.Component;
@@ -43,5 +46,13 @@ public class QuestionMapper {
                 option.getText(),
                 option.isCorrect()
         );
+    }
+    public Question toEntity(CreateQuestionRequest request, Assessment assessment){
+        Question question=new Question();
+        question.setText(request.getText());
+        question.setType(request.getType());
+        question.setPoints(request.getPoints());
+        question.setAssessment(assessment);
+        return question;
     }
 }

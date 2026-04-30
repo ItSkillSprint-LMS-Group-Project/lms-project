@@ -15,7 +15,6 @@ public class ContentCreateRequest {
 
     private String text;
 
-    private Integer orderIndex;
 
     @NotNull(message = "Course ID is required")
     private Long courseId;

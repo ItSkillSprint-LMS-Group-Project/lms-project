@@ -22,15 +22,15 @@ public class OptionService {
     private final QuestionMapper questionMapper;
 
     public OptionTeacherResponse createOption(CreateOptionRequest request) {
-        Question question = questionService.findQuestionById(request.questionId());
+        Question question = questionService.findQuestionById(request.getQuestionId());
 
         if (question.getType().name().equals("OPEN")) {
             throw new BadRequestException("Open questions cannot have options");
         }
 
         Option option = new Option();
-        option.setText(request.text());
-        option.setCorrect(request.correct());
+        option.setText(request.getText());
+        option.setCorrect(request.isCorrect());
         option.setQuestion(question);
 
         return questionMapper.toTeacherOptionResponse(optionRepository.save(option));

@@ -76,4 +76,21 @@ public class ContentService {
         return contentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Content not found"));
     }
+    public boolean canAccess(Long contentId, Long userId) {
+        Content content = contentRepository.findById(contentId).orElse(null);
+        if (content == null) return false;
+
+        Long courseId = content.getCourse().getId();
+        return courseRepository.existsByIdAndTeacherId(courseId, userId) ||
+                enrollmentRepository.existsByCourseIdAndStudentId(courseId, userId);
+    }
+
+    public boolean canModify(Long contentId, Long userId) {
+        Content content = contentRepository.findById(contentId).orElse(null);
+        if (content == null) return false;
+        return courseRepository.existsByIdAndTeacherId(content.getCourse().getId(), userId);
+    }
+    public boolean canCreateForCourse(Long courseId, Long userId) {
+        return courseRepository.existsByIdAndTeacherId(courseId, userId);
+    }
 }

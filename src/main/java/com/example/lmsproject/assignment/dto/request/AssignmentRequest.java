@@ -16,7 +16,6 @@ public class AssignmentRequest {
     @NotNull(message = "Due date is required")
     private LocalDateTime dueDate;
 
-    private Integer orderIndex;
 
     @NotNull(message = "Course ID is required")
     private Long courseId;

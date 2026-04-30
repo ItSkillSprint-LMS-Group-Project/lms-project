@@ -5,6 +5,9 @@ import com.example.lmsproject.course.dto.CourseResponse;
 import com.example.lmsproject.course.dto.CourseUpdateRequest;
 import com.example.lmsproject.course.service.CourseService;
 import com.example.lmsproject.security.model.CustomUserDetails;
+import com.example.lmsproject.user.dto.response.UserResponse;
+import com.example.lmsproject.user.entity.User;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,22 +26,27 @@ public class CourseController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('TEACHER')")
-    public ResponseEntity<CourseResponse> createCourse(@RequestBody CourseRequest courseRequest, @AuthenticationPrincipal CustomUserDetails user){
+    @PreAuthorize("hasRole('TEACHER')or hasRole('ADMIN')")
+    public ResponseEntity<CourseResponse> createCourse(@RequestBody @Valid CourseRequest courseRequest, @AuthenticationPrincipal CustomUserDetails user){
         CourseResponse courseResponse = courseService.createCourse(courseRequest, user.getId());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(courseResponse);
     }
     @GetMapping("/{id}")
-    @PreAuthorize("@courseService.isOwner(#id, authentication.principal.id) or hasRole('ADMIN')")
+    @PreAuthorize("@courseService.canAccessCourse(#id, authentication.principal.id) or hasRole('ADMIN')")
     public ResponseEntity<CourseResponse> getCourseById(@PathVariable Long id) {
         return ResponseEntity.ok(courseService.getCourseById(id));
     }
-    @GetMapping("/my")
+    @GetMapping("/me")
     @PreAuthorize("hasRole('TEACHER')")
-    public ResponseEntity<List<CourseResponse>> getCourses(@AuthenticationPrincipal CustomUserDetails user) {
+    public ResponseEntity<List<CourseResponse>> getMyCourses(@AuthenticationPrincipal CustomUserDetails user) {
         return ResponseEntity.ok(courseService.getCoursesByTeacher(user.getId()));
+    }
+    @GetMapping("/{id}/students")
+    @PreAuthorize("@courseService.isOwner(#id, authentication.principal.id)")
+    public ResponseEntity<List<UserResponse>> getCourseStudents(@PathVariable Long id) {
+        return ResponseEntity.ok(courseService.getStudentsByCourse(id));
     }
     @GetMapping()
     @PreAuthorize("hasRole('ADMIN')")
@@ -48,7 +56,7 @@ public class CourseController {
 
 
     @PatchMapping("/{id}")
-    @PreAuthorize("@courseService.isOwner(#id, authentication.principal.id) or hasRole('ADMIN')")
+    @PreAuthorize("@courseService.isOwner(#id, authentication.principal.id)")
     public ResponseEntity<CourseResponse> updateCourse(
             @PathVariable Long id,
             @RequestBody CourseUpdateRequest request

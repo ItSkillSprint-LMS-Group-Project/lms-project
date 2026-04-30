@@ -4,11 +4,12 @@ import com.example.lmsproject.exception.AlreadyExistsException;
 import com.example.lmsproject.exception.BadRequestException;
 import com.example.lmsproject.exception.ForbiddenOperationException;
 import com.example.lmsproject.security.service.JwtService;
+import com.example.lmsproject.user.dto.request.CreateUserRequest;
 import com.example.lmsproject.user.entity.User;
 import com.example.lmsproject.user.entity.UserRole;
 import com.example.lmsproject.user.dto.response.AuthResponse;
 import com.example.lmsproject.user.dto.request.LoginRequest;
-import com.example.lmsproject.user.dto.request.RegisterRequest;
+import com.example.lmsproject.user.mapper.UserMapper;
 import com.example.lmsproject.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,10 +21,11 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
-    public void register(RegisterRequest request) {
+    public void register(CreateUserRequest request) {
         String email = normalizeEmail(request.getEmail());
 
         validateEmailUniqueness(email);
@@ -47,7 +49,7 @@ public class AuthService {
         }
 
         String token = jwtService.generateToken(user);
-        return new AuthResponse(token);
+        return new AuthResponse(user.getId(),user.getRole(),token);
     }
 
     private void validateEmailUniqueness(String email) {
@@ -56,13 +58,13 @@ public class AuthService {
         }
     }
 
-    private void validateRole(RegisterRequest request) {
+    private void validateRole(CreateUserRequest request) {
         if (request.getRole() == UserRole.ADMIN) {
             throw new ForbiddenOperationException("Admin registration is not allowed");
         }
     }
 
-    private void validateRoleSpecificFields(RegisterRequest request) {
+    private void validateRoleSpecificFields(CreateUserRequest request) {
         if (request.getRole() == UserRole.STUDENT) {
             validateStudentRegistration(request);
             return;
@@ -76,7 +78,7 @@ public class AuthService {
         throw new BadRequestException("Invalid role");
     }
 
-    private void validateStudentRegistration(RegisterRequest request) {
+    private void validateStudentRegistration(CreateUserRequest request) {
         if (isBlank(request.getStudentIdNumber())) {
             throw new BadRequestException("Student ID number is required for student registration");
         }
@@ -90,7 +92,7 @@ public class AuthService {
         }
     }
 
-    private void validateTeacherRegistration(RegisterRequest request) {
+    private void validateTeacherRegistration(CreateUserRequest request) {
         if (isBlank(request.getTeacherIdNumber())) {
             throw new BadRequestException("Teacher ID number is required for teacher registration");
         }
@@ -104,14 +106,8 @@ public class AuthService {
         }
     }
 
-    private User buildUser(RegisterRequest request, String email) {
-        User user = new User();
-        user.setFirstName(request.getFirstName().trim());
-        user.setLastName(request.getLastName().trim());
-        user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(request.getRole());
-
+    private User buildUser(CreateUserRequest request, String email) {
+        User user =userMapper.toEntity(request);
         if (request.getRole() == UserRole.STUDENT) {
             user.setStudentIdNumber(request.getStudentIdNumber().trim());
         }

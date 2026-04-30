@@ -1,8 +1,14 @@
 package com.example.lmsproject.assessment.dto.response;
 
-public record OptionTeacherResponse(
-        Long id,
-        String text,
-        boolean correct
-) {
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class OptionTeacherResponse {
+
+    private Long id;
+    private String text;
+    private boolean correct;
 }

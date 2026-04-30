@@ -1,8 +1,8 @@
 package com.example.lmsproject.user.controller;
 
+import com.example.lmsproject.user.dto.request.CreateUserRequest;
 import com.example.lmsproject.user.dto.response.AuthResponse;
 import com.example.lmsproject.user.dto.request.LoginRequest;
-import com.example.lmsproject.user.dto.request.RegisterRequest;
 import com.example.lmsproject.user.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<String> register(@Valid @RequestBody CreateUserRequest request) {
         authService.register(request);
         return ResponseEntity.ok("User registered successfully");
     }

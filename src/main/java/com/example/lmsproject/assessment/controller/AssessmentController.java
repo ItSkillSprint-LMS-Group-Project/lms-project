@@ -37,7 +37,7 @@ public class AssessmentController {
         return ResponseEntity.ok(assessmentService.getAssessmentsByCourse(courseId));
     }
 
-    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canCreateForCourse(#request.courseId(), authentication.principal.id)")
+    @PreAuthorize("hasRole('ADMIN') or @assessmentService.canCreateForCourse(#request.getCourseId(), authentication.principal.id)")
     @PostMapping
     public ResponseEntity<AssessmentResponse> createAssessment(@Valid @RequestBody CreateAssessmentRequest request) {
         return ResponseEntity.status(201).body(assessmentService.createAssessment(request));
