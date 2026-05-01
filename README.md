@@ -213,6 +213,7 @@ This project was built as a group project under the **ItSkillSprint** program.
 
 👤 [Aslan Mammadzada](https://www.linkedin.com/in/aslan-mammadzada/)  
 👤 [Mikayil Guliyev](https://www.linkedin.com/in/mikay%C4%B1l-quliyev-341275306/)
+👤 [Yunis Sadig]([https://www.linkedin.com/in/mikay%C4%B1l-quliyev-341275306/](https://www.linkedin.com/in/yunis-sadiq-5a99b930b/))
 
 ## 📝 Task Management
 
