@@ -209,6 +209,11 @@ lms-project/
 
 This project was built as a group project under the **ItSkillSprint** program.
 
+## 🔗 LinkedIn
+
+https://www.linkedin.com/in/aslan-mammadzada/
+linkedin.com/in/mikayilquliyev-341275306
+
 ## 📝 Task Management
 
 We used Jira to manage tasks among ourselves.
