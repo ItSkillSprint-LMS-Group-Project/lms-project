@@ -212,7 +212,7 @@ This project was built as a group project under the **ItSkillSprint** program.
 ## 🔗 LinkedIn
 
 https://www.linkedin.com/in/aslan-mammadzada/
-linkedin.com/in/mikayilquliyev-341275306
+https://www.linkedin.com/in/mikay%C4%B1l-quliyev-341275306/
 
 ## 📝 Task Management
 
