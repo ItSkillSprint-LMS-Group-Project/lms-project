@@ -211,9 +211,8 @@ This project was built as a group project under the **ItSkillSprint** program.
 
 ## 🔗 LinkedIn
 
-(Aslan Mammadzada) https://www.linkedin.com/in/aslan-mammadzada/
-~
-(Mikayil Guliyev) https://www.linkedin.com/in/mikay%C4%B1l-quliyev-341275306/
+👤 [Aslan Mammadzada](https://www.linkedin.com/in/aslan-mammadzada/)  
+👤 [Mikayil Guliyev](https://www.linkedin.com/in/mikay%C4%B1l-quliyev-341275306/)
 
 ## 📝 Task Management
 
