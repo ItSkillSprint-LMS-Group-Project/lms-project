@@ -22,12 +22,8 @@ public class EnrollmentController {
     }
     @PostMapping("/enroll-by-code")
     @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<EnrollmentResponse> enrollByCourseCode(
-            @RequestBody EnrollByCodeRequest request,
-            @AuthenticationPrincipal CustomUserDetails user
-    ) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(enrollmentService.enrollByCourseCode(request, user.getId()));
+    public ResponseEntity<EnrollmentResponse> enrollByCourseCode(@RequestBody EnrollByCodeRequest request, @AuthenticationPrincipal CustomUserDetails user) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(enrollmentService.enrollByCourseCode(request, user.getId()));
     }
     @PostMapping("/courses/{courseId}/enroll-by-email")
     @PreAuthorize("@courseService.isOwner(#courseId,authentication.principal.id)")
@@ -39,13 +35,5 @@ public class EnrollmentController {
     public ResponseEntity<List<EnrollmentResponse>> enrollmentsByStudent(@AuthenticationPrincipal CustomUserDetails user){
         return ResponseEntity.ok(enrollmentService.enrollmentsByStudent(user.getId()));
     }
-    @GetMapping("/students")
-    @PreAuthorize("hasRole('TEACHER')")
-    public ResponseEntity<List<EnrollmentResponse>> getMyStudents(
-            @AuthenticationPrincipal CustomUserDetails user
-    ) {
-        return ResponseEntity.ok(
-                enrollmentService.getStudentsByTeacher(user.getId())
-        );
-    }
+
 }

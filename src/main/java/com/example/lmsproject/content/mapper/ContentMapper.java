@@ -1,4 +1,4 @@
-﻿package com.example.lmsproject.content.mapper;
+package com.example.lmsproject.content.mapper;
 import com.example.lmsproject.content.entity.Content;
 import com.example.lmsproject.content.dto.request.ContentCreateRequest;
 import com.example.lmsproject.content.dto.response.ContentResponse;
@@ -11,24 +11,25 @@ public class ContentMapper {
         content.setTitle(request.getTitle());
         content.setType(request.getType());
         content.setText(request.getText());
-        content.setOrderIndex(request.getOrderIndex());
         content.setCourse(course);
         return content;
     }
+
     public static ContentResponse toResponse(Content content) {
         ContentResponse response = new ContentResponse();
         response.setId(content.getId());
         response.setTitle(content.getTitle());
         response.setType(content.getType());
         response.setText(content.getText());
-        response.setOrderIndex(content.getOrderIndex());
         response.setCourseId(content.getCourse().getId());
         response.setCourseTitle(content.getCourse().getTitle());
         return response;
     }
+
     public static List<ContentResponse> toResponseList(List<Content> contents) {
         return contents.stream().map(ContentMapper::toResponse).toList();
     }
+
     public static void updateEntity(Content content, ContentUpdateRequest request) {
         if (request.getTitle() != null) {
             content.setTitle(request.getTitle());
@@ -39,8 +40,6 @@ public class ContentMapper {
         if (request.getText() != null) {
             content.setText(request.getText());
         }
-        if (request.getOrderIndex() != null) {
-            content.setOrderIndex(request.getOrderIndex());
-        }
+
     }
 }

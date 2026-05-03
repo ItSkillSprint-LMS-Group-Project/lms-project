@@ -27,7 +27,7 @@ public class AssignmentSubmission {
     @CreationTimestamp
     private LocalDateTime submittedAt;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "assignment_id")
     private Assignment assignment;
 

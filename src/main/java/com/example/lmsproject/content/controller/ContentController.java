@@ -1,4 +1,4 @@
-﻿package com.example.lmsproject.content.controller;
+package com.example.lmsproject.content.controller;
 import com.example.lmsproject.content.dto.request.ContentCreateRequest;
 import com.example.lmsproject.content.dto.response.ContentResponse;
 import com.example.lmsproject.content.dto.request.ContentUpdateRequest;
@@ -18,7 +18,7 @@ public class ContentController {
         this.contentService = contentService;
     }
     @PostMapping
-    @PreAuthorize("hasRole('TEACHER')")
+    @PreAuthorize("@contentService.canCreateForCourse(#request.getCourseId(), authentication.principal.id) or hasRole('ADMIN')")
     public ResponseEntity<ContentResponse> createContent(
             @RequestBody ContentCreateRequest request,
             @AuthenticationPrincipal CustomUserDetails user) {
@@ -26,7 +26,7 @@ public class ContentController {
                 .body(contentService.createContent(request, user.getId()));
     }
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('TEACHER') or hasRole('STUDENT')")
+    @PreAuthorize("@contentService.canAccess(#id,authentication.principal.id)")
     public ResponseEntity<ContentResponse> getContentById(@PathVariable Long id, @AuthenticationPrincipal CustomUserDetails user) {
         return ResponseEntity.ok(contentService.getContentById(id, user.getId(), user.getAuthorities()));
     }
@@ -36,7 +36,7 @@ public class ContentController {
         return ResponseEntity.ok(contentService.getContentsByCourse(courseId));
     }
     @PatchMapping("/{id}")
-    @PreAuthorize("hasRole('TEACHER')")
+    @PreAuthorize("@contentService.canModify(#id,authentication.principal.id)")
     public ResponseEntity<ContentResponse> updateContent(
             @PathVariable Long id,
             @RequestBody ContentUpdateRequest request,
@@ -44,7 +44,7 @@ public class ContentController {
         return ResponseEntity.ok(contentService.updateContent(id, request, user.getId()));
     }
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('TEACHER')")
+    @PreAuthorize("@contentService.canModify(#id,authentication.principal.id) or hasRole('ADMIN')")
     public ResponseEntity<Void> deleteContent(
             @PathVariable Long id,
             @AuthenticationPrincipal CustomUserDetails user) {

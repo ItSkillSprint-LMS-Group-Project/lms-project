@@ -1,0 +1,29 @@
+package com.example.lmsproject.assessment.dto.request;
+
+import com.example.lmsproject.assessment.entity.AssessmentType;
+import jakarta.validation.constraints.*;
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class CreateAssessmentRequest {
+
+        @NotBlank(message = "Title is required")
+        @Size(max = 150, message = "Title must be less than 150 characters")
+        private String title;
+
+        @NotNull(message = "Assessment type is required")
+        private AssessmentType assessmentType;
+
+        @NotNull(message = "Course id is required")
+        private Long courseId;
+
+        @NotNull(message = "Time limit is required")
+        @Min(value = 1, message = "Time limit must be at least 1 minute")
+        private Integer timeLimitMinutes;
+
+        private String externalLink;
+
+}

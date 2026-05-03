@@ -1,10 +1,11 @@
 package com.example.lmsproject.user.dto.response;
 
 import com.example.lmsproject.user.entity.UserRole;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
+@Setter
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class UserResponse {
     private Long id;

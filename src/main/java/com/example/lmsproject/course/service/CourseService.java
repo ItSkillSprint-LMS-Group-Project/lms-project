@@ -6,8 +6,13 @@ import com.example.lmsproject.course.dto.CourseUpdateRequest;
 import com.example.lmsproject.course.entity.Course;
 import com.example.lmsproject.course.mapper.CourseMapper;
 import com.example.lmsproject.course.repository.CourseRepository;
+import com.example.lmsproject.enrollment.entity.Enrollment;
+import com.example.lmsproject.enrollment.repository.EnrollmentRepository;
+import com.example.lmsproject.enrollment.service.EnrollmentService;
 import com.example.lmsproject.exception.ResourceNotFoundException;
+import com.example.lmsproject.user.dto.response.UserResponse;
 import com.example.lmsproject.user.entity.User;
+import com.example.lmsproject.user.mapper.UserMapper;
 import com.example.lmsproject.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -20,11 +25,17 @@ public class CourseService {
 
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
+    private final EnrollmentService enrollmentService;
+    private final EnrollmentRepository enrollmentRepository;
+    private final UserMapper userMapper;
 
     public CourseService(CourseRepository courseRepository,
-                         UserRepository userRepository) {
+                         UserRepository userRepository, EnrollmentService enrollmentService, EnrollmentRepository enrollmentRepository, UserMapper userMapper) {
         this.courseRepository = courseRepository;
         this.userRepository = userRepository;
+        this.enrollmentService = enrollmentService;
+        this.enrollmentRepository = enrollmentRepository;
+        this.userMapper = userMapper;
     }
 
     @Transactional
@@ -54,7 +65,16 @@ public class CourseService {
     public List<CourseResponse> getAllCourses() {
         return CourseMapper.toResponseList(courseRepository.findAll());
     }
+    public List<UserResponse> getStudentsByCourse(Long courseId) {
+        findCourse(courseId);
 
+
+        return enrollmentRepository.findByCourseId(courseId)
+                .stream()
+                .map(Enrollment::getStudent)
+                .map(userMapper::ToResponse)
+                .toList();
+    }
     @Transactional
     public CourseResponse updateCourse(Long id, CourseUpdateRequest request) {
 
@@ -74,6 +94,11 @@ public class CourseService {
         return courseRepository.existsByIdAndTeacherId(courseId, userId);
     }
 
+    public boolean canAccessCourse(Long courseId, Long userId) {
+        return isOwner(courseId, userId)
+                || enrollmentService.isEnrolled(courseId, userId);
+    }
+
     private Course findCourse(Long id) {
         return courseRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
@@ -82,4 +107,6 @@ public class CourseService {
     private String generateCode() {
         return UUID.randomUUID().toString().substring(0, 8).toUpperCase();
     }
+
+
 }

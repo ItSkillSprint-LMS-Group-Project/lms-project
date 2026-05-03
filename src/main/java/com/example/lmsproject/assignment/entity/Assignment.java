@@ -1,7 +1,6 @@
 package com.example.lmsproject.assignment.entity;
 
 import com.example.lmsproject.course.entity.Course;
-import com.example.lmsproject.assignmentSubmission.AssignmentSubmission;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -15,16 +14,25 @@ public class Assignment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column
     private String title;
+
+    @Column
     private String description;
+
+    @Column
     private LocalDateTime dueDate;
-    private Integer orderIndex;
+
+    @Column
+    private String feedback;
+
+    @Column
+    private Integer grade=0;
 
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @OneToMany(mappedBy = "assignment")
-    private List<AssignmentSubmission> submissions;
+    @OneToOne(mappedBy = "assignment")
+    private AssignmentSubmission submission;
 }
